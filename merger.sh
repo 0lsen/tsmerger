@@ -12,8 +12,12 @@ echo -e "\ndownloading segments..."
 I=0
 while curl -s ${BASE_URL}${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER} -o ${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER}
 do
-        cat ${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER} >> $FILE_NAME
-        rm ${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER}
+        FILE=${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER}
+        if ! [ -f $FILE ]; then
+            break;
+        fi
+        cat $FILE >> $FILE_NAME
+        rm $FILE
         echo "  segment $I downloaded, merged and deleted"
         I=$(($I+1))
 done
