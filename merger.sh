@@ -10,7 +10,7 @@ FILE_NAME=video.ts
 
 echo -e "\ndownloading segments..."
 I=0
-while wget -q ${BASE_URL}${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER}
+while curl -s ${BASE_URL}${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER} -o ${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER}
 do
         cat ${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER} >> $FILE_NAME
         rm ${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER}
