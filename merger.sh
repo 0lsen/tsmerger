@@ -10,12 +10,13 @@ FILE_NAME=video.ts
 
 echo -e "\ndownloading segments..."
 I=0
-while curl -s ${BASE_URL}${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER} -o ${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER}
+while curl -s -f ${BASE_URL}${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER} -o ${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER}
 do
-        FILE=${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER}
-        if ! [ -f $FILE ]; then
-            break;
+        res=$?
+        if test "$res" != "0"; then
+                break;
         fi
+        FILE=${FILE_NAME_BEFORE}${I}${FILE_NAME_AFTER}
         cat $FILE >> $FILE_NAME
         rm $FILE
         echo "  segment $I downloaded, merged and deleted"
